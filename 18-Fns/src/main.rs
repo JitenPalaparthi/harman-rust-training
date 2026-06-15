@@ -99,8 +99,24 @@ fn main() {
 
     some_fn("How are you doing");
 
+    // This progam does not run
+   // println!("{}",s1);
 
-   println!("{}",s1);
+     let mut some_fn= move |s:&str|{
+        s1.push_str(s);
+        println!("{}",s1);
+    };
+
+    let mut s1 = "hello World!"; // RO
+
+    let mut s2 = "hello World!"; // RO
+
+    let mut s3 = "hello World!"; // RO
+
+    s1 = "hello Universe!"; //RO
+
+    //s1 = "Hello Universe!"
+
 
 
 }
