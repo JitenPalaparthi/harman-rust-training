@@ -13,6 +13,7 @@ fn main() {
 
 }
 
+#[derive(Debug)]
 struct Rect{
     L:f32,
     B:f32,
@@ -70,13 +71,13 @@ impl What for Square{
 }
 
 impl Shape for Square{
-    type Output = f32;
-     fn area(&self)->f32{
-        return self.0*self.0
+    type Output = f64;
+     fn area(&self)->f64{
+        return (self.0*self.0)as f64
      }
 
-    fn perimeter(&self)->f32{
-        return 4.0 * (self.0);
+    fn perimeter(&self)->f64{
+        return (4.0 * (self.0))as f64;
     }
 }
 
@@ -86,23 +87,23 @@ impl Shape for Square{
 
 
 // This kind of a dependency injection
-fn print_shape1<S:Shape>(t:&S){ // static dispatch
+fn print_shape1<S:Shape<Output = f64>>(t:&S){ // static dispatch
+    println!("Area of {}: {:?}",t.what(),t.area());
+    println!("Perimeter of {}:{}",t.what(),t.perimeter());
+}
+
+fn print_shape2<S>(t:&S) where S:Shape<Output = f64>{ // static dispatch
+    println!("Area of {:?}: {:?}",t.what(),t.area());
+    println!("Perimeter of {}:{}",t.what(),t.perimeter());
+}
+
+
+fn print_shape3(t:&impl Shape<Output=f64>){ // static dispatch
     println!("Area of {}: {}",t.what(),t.area());
     println!("Perimeter of {}:{}",t.what(),t.perimeter());
 }
 
-fn print_shape2<S>(t:&S) where S:Shape{ // static dispatch
-    println!("Area of {}: {}",t.what(),t.area());
-    println!("Perimeter of {}:{}",t.what(),t.perimeter());
-}
-
-
-fn print_shape3(t:&impl Shape){ // static dispatch
-    println!("Area of {}: {}",t.what(),t.area());
-    println!("Perimeter of {}:{}",t.what(),t.perimeter());
-}
-
-fn print_shape4(t:&dyn Shape){ // dynamic dispatch
+fn print_shape4(t:&dyn Shape<Output=f64>){ // dynamic dispatch
     println!("Area of {}: {}",t.what(),t.area());
     println!("Perimeter of {}:{}",t.what(),t.perimeter());
 }
