@@ -9,6 +9,7 @@ fn main() {
 }
 // fluent api or chain of actions
 
+// impl is a code should be existed,code should be there or code would be generated
 trait TCalc {
     fn add(&mut self, d: i32) -> &mut impl TCalc;
     fn sub(&mut self, d: i32) -> &mut impl TCalc;
